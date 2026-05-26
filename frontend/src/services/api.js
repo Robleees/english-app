@@ -17,3 +17,12 @@ export const vocabularyApi = {
   review:  (id, difficulty) => api.post(`/api/vocabulary/${id}/review`, { difficulty }),
   getDue:  ()             => api.get('/api/vocabulary/due'),
 }
+
+export const newsApi = {
+  // category: 'technology' | 'science' | 'environment' | 'sports' | 'general'
+  getArticles: (category = 'technology') =>
+    api.get('/api/news', { params: { category } }),
+  // text: título + descripción del artículo
+  analyze: (text) =>
+    api.post('/api/news/analyze', { text }),
+}

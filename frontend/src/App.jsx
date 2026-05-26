@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import Vocabulary from './pages/Vocabulary'
+import News from './pages/News'
 
 // Placeholder mientras se implementan las demás secciones
 function ComingSoon({ name }) {
@@ -19,7 +20,7 @@ export default function App() {
           {/* Redirige la raíz a vocabulario */}
           <Route path="/" element={<Navigate to="/vocabulary" replace />} />
           <Route path="/vocabulary" element={<Vocabulary />} />
-          <Route path="/news"       element={<ComingSoon name="Noticias" />} />
+          <Route path="/news"       element={<News />} />
           <Route path="/grammar"    element={<ComingSoon name="Gramática" />} />
           <Route path="/music"      element={<ComingSoon name="Música" />} />
           <Route path="/practice"   element={<ComingSoon name="Práctica" />} />
