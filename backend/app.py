@@ -11,11 +11,13 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Extensiones
+    # Sin esto, Flask haría 308 redirect de /api/vocabulary a /api/vocabulary/
+    # lo que rompe CORS en algunos browsers
+    app.url_map.strict_slashes = False
+
     db.init_app(app)
     CORS(app, origins=app.config['CORS_ORIGINS'])
 
-    # Blueprints — una ruta por sección
     from routes.news import news_bp
     from routes.vocabulary import vocabulary_bp
     from routes.grammar import grammar_bp
@@ -30,8 +32,11 @@ def create_app(config_class=Config):
     app.register_blueprint(practice_bp)
     app.register_blueprint(progress_bp)
 
-    # Crear tablas en primera ejecución
     with app.app_context():
+        # Los modelos deben importarse ANTES de create_all() para que
+        # SQLAlchemy registre sus tablas en el metadata
+        from models.vocabulary import Word          # noqa: F401
+        from models.progress import DailyActivity  # noqa: F401
         db.create_all()
 
     @app.route('/api/health')

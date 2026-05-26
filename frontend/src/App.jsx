@@ -1,24 +1,31 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Layout from './components/Layout/Layout'
+import Vocabulary from './pages/Vocabulary'
 
-function App() {
+// Placeholder mientras se implementan las demás secciones
+function ComingSoon({ name }) {
+  return (
+    <div className="flex items-center justify-center min-h-[60vh] text-gray-300">
+      <p className="text-lg">{name} — próximamente</p>
+    </div>
+  )
+}
+
+export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50 text-gray-900">
+      <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* Redirige la raíz a vocabulario */}
+          <Route path="/" element={<Navigate to="/vocabulary" replace />} />
+          <Route path="/vocabulary" element={<Vocabulary />} />
+          <Route path="/news"       element={<ComingSoon name="Noticias" />} />
+          <Route path="/grammar"    element={<ComingSoon name="Gramática" />} />
+          <Route path="/music"      element={<ComingSoon name="Música" />} />
+          <Route path="/practice"   element={<ComingSoon name="Práctica" />} />
+          <Route path="/progress"   element={<ComingSoon name="Progreso" />} />
         </Routes>
-      </div>
+      </Layout>
     </BrowserRouter>
   )
 }
-
-function Home() {
-  return (
-    <main className="flex flex-col items-center justify-center min-h-screen gap-4">
-      <h1 className="text-4xl font-bold text-indigo-600">EnglishApp</h1>
-      <p className="text-gray-500">Tu herramienta personal para aprender inglés</p>
-    </main>
-  )
-}
-
-export default App
